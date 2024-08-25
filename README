@@ -1,0 +1,20 @@
+API REST Task manager
+
+API Desenvolvida para gerenciar tarefas com autenticação email e senha, nessa API
+é possível registrar usuário, fazer o login e gerenciar tarefa dos usuário.
+O usuário podendo criar, editar e excluir tarefas;
+
+Principais Tecnologias usadas:
+
+Node.JS
+Express
+Express-validator
+dotenv
+jsonwebtoken
+bcrypt
+Mongo.DB
+Mongoose
+config
+Typescript
+
+Utilizei o modelo de arquitetura MVC
