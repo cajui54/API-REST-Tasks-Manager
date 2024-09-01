@@ -1,9 +1,12 @@
 import express from "express";
 import {
+  addNewTask,
   authLogin,
+  deleteTask,
   getAllUser,
   getUserById,
   registerUser,
+  updateTask,
 } from "../../controllers/userControler";
 import { validate } from "../../../middleware/handleValidation";
 import {
@@ -35,4 +38,8 @@ routesUser.post(
   validate,
   authLogin
 );
+routesUser.post("/tasks/:id", addNewTask);
+routesUser.patch("/tasks/:id", updateTask);
+routesUser.delete("/tasks/:id", deleteTask);
+
 export default routesUser;

@@ -2,6 +2,12 @@ import { Request, Response } from "express";
 import { UserModel } from "../../models/User.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {
+  createNewTask,
+  findUserById,
+  removeTaskById,
+  updateTaskByTask,
+} from "../../tools/taskManager";
 
 export const getAllUser = async (request: Request, response: Response) => {
   try {
@@ -23,6 +29,7 @@ export const getUserById = async (request: Request, response: Response) => {
   if (!user) {
     return response.status(404).json({ msg: "Usuário não encontrado!" });
   }
+
   return response.status(200).json(user);
 };
 export const registerUser = async (request: Request, response: Response) => {
@@ -31,7 +38,9 @@ export const registerUser = async (request: Request, response: Response) => {
 
     const salt = await bcrypt.genSalt(12);
     const passwordHash = await bcrypt.hash(user.password, salt);
-    await UserModel.create({ ...user, password: passwordHash });
+    const newUser = { ...user, password: passwordHash, tasks: [] };
+
+    await UserModel.create(newUser);
 
     return response
       .status(201)
@@ -60,5 +69,47 @@ export const authLogin = async (request: Request, response: Response) => {
     return response
       .status(500)
       .json({ msg: "Ocorreu um erro no servidor, tente mais tarde!" });
+  }
+};
+export const addNewTask = async (request: Request, response: Response) => {
+  try {
+    const newTask = request.body;
+
+    createNewTask(request, newTask);
+
+    return response
+      .status(200)
+      .json({ msg: "Tarefa foi cadastrada com sucesso!" });
+  } catch (error) {
+    return response
+      .status(400)
+      .json({ msg: "Ocorreu um erro inesperado: \n" + error });
+  }
+};
+export const deleteTask = async (request: Request, response: Response) => {
+  const { id } = request.params;
+  const task = request.body;
+
+  try {
+    const tasks = await removeTaskById(id, task.idTask);
+
+    return response.status(201).json(tasks);
+  } catch (error) {
+    return response
+      .status(400)
+      .json({ msg: `Ocorreu um erro inesperado ${error}` });
+  }
+};
+export const updateTask = async (request: Request, response: Response) => {
+  const { id } = request.params;
+  const task = request.body;
+  try {
+    const value = await updateTaskByTask(id, task);
+
+    return response.status(201).json(value);
+  } catch (error) {
+    return response
+      .status(400)
+      .json({ msg: `Ocorreu um erro inesperado ${error}` });
   }
 };
