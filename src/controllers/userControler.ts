@@ -13,7 +13,7 @@ export const getAllUser = async (request: Request, response: Response) => {
   try {
     const users = await UserModel.find();
     if (users) {
-      return response.status(200).json(users);
+      return response.status(202).json(users);
     }
     throw "Não há usuário cadastrados";
   } catch (error) {
@@ -104,7 +104,7 @@ export const updateTask = async (request: Request, response: Response) => {
   const { id } = request.params;
   const task = request.body;
   try {
-    const value = await updateTaskByTask(id, task);
+    const value = await updateTaskByTask(task);
 
     return response.status(201).json(value);
   } catch (error) {

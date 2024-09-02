@@ -38,7 +38,7 @@ export const removeTaskById = async (idUser: string, idTask: string) => {
     throw `Ocorreu um erro inesperado! ${error}`;
   }
 };
-export const updateTaskByTask = async (idUser: string, task: ITask) => {
+export const updateTaskByTask = async (task: ITask) => {
   try {
     const updateTask = await UserModel.findOneAndUpdate(
       { "tasks._id": task._id },
