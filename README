@@ -1,4 +1,4 @@
-API REST Task manager
+***API REST Task manager
 
 API Desenvolvida para gerenciar tarefas com autenticação email e senha, nessa API
 é possível registrar usuário, fazer o login e gerenciar tarefa dos usuário.
