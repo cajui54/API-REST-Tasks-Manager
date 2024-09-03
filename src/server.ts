@@ -10,7 +10,7 @@ server.use(cors());
 server.use(express.json());
 server.use(routes);
 
-server.listen(port || 3333, async () => {
+server.listen(port, async () => {
   await connectDatabase();
   console.log(`Server is running at port ${port}!`);
 });
